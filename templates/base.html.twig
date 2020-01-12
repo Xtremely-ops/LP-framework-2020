@@ -7,6 +7,12 @@
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">TD_3</a>
+    {%  if identifiant is defined %}
+        <a class="navbar-brand" href="#">{{identifiant.login}}</a>
+    {% endif %}
+</nav>
 <div class="container">
     <div class="row">
         <div class="col-sm">

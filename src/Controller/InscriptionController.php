@@ -8,6 +8,7 @@ use App\Entity\Inscription;
 use App\Form\Type\InscriptionType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -17,6 +18,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class InscriptionController extends AbstractController
 {
+    private $session;
+
+    public function __construct( SessionInterface $session)
+    {
+        $this->session = $session;
+    }
+
     /**
      * @Route("/identifiant")
      * @param $request Request
@@ -30,6 +38,7 @@ class InscriptionController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $inscription = $form->getData();
+            $this->session->set('identifiant',serialize($inscription));
             return $this->redirectToRoute('inscription_home');
         }
         return $this->render( "inscription/identifiant.html.twig",
@@ -42,7 +51,12 @@ class InscriptionController extends AbstractController
      */
     public function home()
     {
+        $twigVar = [];
+        if ( $this->session->has('identifiant') )
+        {
+            $twigVar[ 'identifiant'] = unserialize($this->session->get('identifiant'));
+        }
         return $this->render( "inscription/home.html.twig",
-            []);
+            $twigVar);
     }
 }
