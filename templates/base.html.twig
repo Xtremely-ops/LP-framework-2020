@@ -12,8 +12,9 @@
 <div>
     <div class="header">
         <div class="pure-menu pure-menu-horizontal">
-            <a class="pure-menu-heading" href="">Menu</a>
+            <a class="pure-menu-heading" href="{{ path("img_home") }}">Menu</a>
             {{ render(controller('App\\Controller\\ImgController::menu'))  }}
+            <a class="pure-menu-heading" href="{{ path("img_liste") }}">Gestion</a>
         </div>
     </div>
     <div class="pure-g">

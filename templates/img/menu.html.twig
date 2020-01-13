@@ -2,8 +2,8 @@
     <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
         <a href="#" id="menuLink1" class="pure-menu-link">Download</a>
         <ul class="pure-menu-children">
-            {% for item in items  %}
-                <li class="pure-menu-item"><a href="{{ url }}{{ item }}" class="pure-menu-link">{{item}}</a></li>
+            {% for image in items  %}
+                <li class="pure-menu-item"><a href="{{ path( "img_affiche", {nom:image.path} ) }}" class="pure-menu-link">{{ image.path }}</a></li>
             {% endfor %}
         </ul>
     </li>

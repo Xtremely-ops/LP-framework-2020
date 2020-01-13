@@ -2,7 +2,7 @@
 
 {% block body %}
     {{ form_start(form) }}
-    <h3>Images</h3>
+    <h3>Images</h3>{{ form_row(form.upload) }}{{ form_row(form.ajouter) }}
     <ul>
         {# iterate over each existing tag and render its only field: name #}
         {% for image in form.liste_image %}
