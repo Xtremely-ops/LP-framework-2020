@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+
+use App\Entity\ListeImage;
+use App\Form\Type\ListeImageType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,10 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ImgController extends AbstractController
 {
-    // chemin pour la banque d'image, un répertoire images à la racines du projet
-    const PATH_IMG = __DIR__."/../../data/images";
-
-    /**
+     /**
      * Affiche une page d'accueil, ligne graphique + message de bienvenu
      * @Route("/home", name="home_img")
      * @return \Symfony\Component\HttpFoundation\Response
@@ -34,7 +34,7 @@ class ImgController extends AbstractController
      */
     public function affiche( $nom )
     {
-        $filename = self::PATH_IMG."/$nom.jpg";
+        $filename = ListeImage::PATH_IMG."/$nom.jpg";
         if ( ! file_exists($filename) )
             return $this->render('img/no_image.html.twig', ['nom'=>"$nom.jpg"]);
         return $this->file($filename);
@@ -48,7 +48,7 @@ class ImgController extends AbstractController
      */
     public function menu()
     {
-        $listeImages = scandir(self::PATH_IMG);
+        $listeImages = scandir(ListeImage::PATH_IMG);
         foreach ( $listeImages as $key => $pathName ) {
             if ( is_dir( $pathName ) )
                 unset( $listeImages[$key]); // on retire les . et .. de la liste
@@ -59,5 +59,17 @@ class ImgController extends AbstractController
                 'url' => '/img/data/',
                 'items'=> $listeImages
             ]);
+    }
+
+    /**
+     * @Route("/liste")
+     * @return Response
+     */
+    public function liste()
+    {
+        $img = new \App\Entity\ListeImage();
+        $form = $this->createForm(ListeImageType::class, $img);
+        return $this->render("img/liste.html.twig",
+            ['form'=> $form->createView() ]);
     }
 }
