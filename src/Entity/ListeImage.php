@@ -32,4 +32,13 @@ class ListeImage
         }
         return $this->liste ;
     }
+
+    public function removeImage( $path )
+    {
+        if (file_exists( self::PATH_IMG.'/'.$path))
+        {
+            unlink(self::PATH_IMG.'/'.$path);
+        }
+        return $this;
+    }
 }

@@ -72,4 +72,16 @@ class ImgController extends AbstractController
         return $this->render("img/liste.html.twig",
             ['form'=> $form->createView() ]);
     }
+
+    /**
+     * @Route("/delete/{path}", name="img_delete")
+     * @param $path
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function delete( $path )
+    {
+        $liste = new ListeImage();
+        $liste->removeImage($path);
+        return $this->redirect("/img/liste");
+    }
 }
